@@ -1,0 +1,23 @@
+{
+  "name" : "PusherLogger.old",
+  "description" : "A Zend Log logger that uses Pusher to send real-time notifications",
+  "require" : {
+    "zendframework/zend-log" : "2.6.0",
+    "eschrade/pusheraware" : "dev-master"
+  },
+  "authors" : [ {
+    "name" : "Kevin Schroeder",
+    "email" : "kschroeder@mirageworks.com",
+    "homepage" : "http://www.eschrade.com/",
+    "role" : "Developer"
+  } ],
+  "keywords" : [ "pusher", "log", "logging" ],
+  "autoload" : {
+    "psr-0" : {
+      "Eschrade\\PusherLogger\\" : "src/"
+    }
+  },
+  "license" : "MIT",
+  "type" : "library",
+  "homepage" : "https://github.com/kschroeder/PusherLogger"
+}

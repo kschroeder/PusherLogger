@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pusher Logger</title>
+<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="pusherLogger.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
+<style>
+body{
+	font-family: arial;
+}
+
+.message-DEBUG{
+	
+}
+.message-CRIT{
+	
+}
+.message-ERR{
+	
+}
+.message-NOTICE{
+	
+}
+.message-WARN{
+	
+}
+.message-INFO{
+	
+}
+</style>
+</head>
+<body>
+<div id="installation-instructions">
+<h1>Step 1 - Create a new Pusher Application</h1>
+<p>You will need to log in to your Pusher account and create a new application.  Give it a useful name and make sure that Client
+Events is enabled.</p>
+<p><img src="create.png"></p>
+<h1>Step 2 - Create a pushLogger.js file in this directory</h1>
+<p>The pushLogger.js file should have the App ID that your new Pusher application created.  You can have any additional code 
+in this file that you want, but you must create the global pusherKey variable.</p>
+<h2>Example</h2>
+<pre>
+var pusherKey = '123456778890';
+</pre>
+<p>If when you test you get an error, try turning off encryption.</p>
+</div>
+<div class="form-group">
+<label for="log-level"  class="col-sm-2 control-label">Filter Log Events</label>
+<div class="col-sm-10">
+<select id="log-level" class="form-control">
+<option>CRIT</option>
+<option>ERR</option>
+<option>WARN</option>
+<option>NOTICE</option>
+<option>INFO</option>
+<option>DEBUG</option>
+</select>
+</div>
+</div>
+<table class="table table-hover" id="log-table">
+<tr>
+	<th>Type</th>
+	<th>Message</th>
+</tr>
+</table>
+</body>
+<script type="text/javascript">
+if (pusherKey) {
+	document.getElementById('installation-instructions').style.display = "none";
+	var pusher = new Pusher(pusherKey, {
+	      encrypted: true
+	    });
+	    var channel = pusher.subscribe('logger');
+	    channel.bind('log', function(data) {
+	    	var rowClass = '';
+	    	switch (data.priorityName) {
+	    		case 'CRIT':
+	    		case 'ERR':
+	    			rowClass = 'danger';
+	    			break;
+	    		case 'WARN':
+	    			rowClass = 'warning';
+	    			break;
+	    		case 'NOTICE':
+	    			rowClass = 'info';
+	    			break;
+	    		case 'INFO':
+	    			rowClass = 'success';
+	    			break;
+	    	}
+	        var message = $('<td />').text(data.message);
+	        var type = $('<td />').text(data.priorityName);
+	        var row = $('<tr />');
+	        row.addClass(rowClass);
+	        row.append(type);
+	        row.append(message);
+	        $('#log-table tr:first').after(row);
+	    });
+}
+</script>
+
+</html>
