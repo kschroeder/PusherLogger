@@ -1,5 +1,5 @@
 {
-  "name" : "PusherLogger",
+  "name" : "eschrade/pusherlogger",
   "description" : "A Zend Log logger that uses Pusher to send real-time notifications",
   "require" : {
     "zendframework/zend-log" : "2.6.0",
